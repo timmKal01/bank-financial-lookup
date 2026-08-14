@@ -1,0 +1,11 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Output schema of Bank Financial Lookup",
+    "properties": {
+        "results": {
+            "type": "string",
+            "title": "Banks",
+            "template": "{{links.apiDefaultDatasetUrl}}/items"
+        }
+    }
+}

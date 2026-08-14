@@ -1,0 +1,36 @@
+{
+    "title": "Bank Financial Lookup Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "name": {
+            "title": "Bank name",
+            "type": "string",
+            "editor": "textfield",
+            "description": "Full or partial bank name to search for, e.g. \"Wells Fargo\" or \"First National\". Leave blank to browse by state instead."
+        },
+        "state": {
+            "title": "State",
+            "type": "string",
+            "editor": "textfield",
+            "description": "Two-letter US state code to limit to banks headquartered there, e.g. \"TX\". Leave blank for nationwide."
+        },
+        "activeOnly": {
+            "title": "Active institutions only",
+            "type": "boolean",
+            "editor": "checkbox",
+            "description": "Exclude closed, merged, or renamed institutions. Turn off to include historical records too.",
+            "default": true
+        },
+        "maxResults": {
+            "title": "Max results",
+            "type": "integer",
+            "editor": "number",
+            "description": "Maximum number of banks to return, largest total assets first.",
+            "default": 25,
+            "minimum": 1,
+            "maximum": 100
+        }
+    },
+    "required": []
+}
