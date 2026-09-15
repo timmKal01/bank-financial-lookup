@@ -1,5 +1,41 @@
 const BASE_URL = 'https://api.fdic.gov/banks/institutions';
 
+const TRANSIENT_STATUSES = new Set([429, 500, 502, 503, 504]);
+const MAX_ATTEMPTS = 4;
+const REQUEST_TIMEOUT_MS = 15_000;
+
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchWithRetry(url) {
+    let lastError;
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+        let res;
+        try {
+            res = await fetch(url, { headers: { Connection: 'close' }, signal: controller.signal });
+        } catch (err) {
+            lastError = err.name === 'AbortError' ? new Error(`Request timed out after ${REQUEST_TIMEOUT_MS}ms: ${url}`) : err;
+            if (attempt < MAX_ATTEMPTS) {
+                await sleep(1000 * 2 ** (attempt - 1));
+                continue;
+            }
+            throw lastError;
+        } finally {
+            clearTimeout(timeoutId);
+        }
+        if (res.ok) return res;
+        if (!TRANSIENT_STATUSES.has(res.status)) {
+            throw new Error(`FDIC API request failed: ${res.status} ${res.statusText}`);
+        }
+        lastError = new Error(`FDIC API request failed: ${res.status} ${res.statusText}`);
+        if (attempt < MAX_ATTEMPTS) await sleep(1000 * 2 ** (attempt - 1));
+    }
+    throw lastError;
+}
+
 export async function fetchBanks({ name, state, activeOnly, maxResults }) {
     const filterParts = [];
     if (state) filterParts.push(`STALP:${state.toUpperCase()}`);
@@ -17,10 +53,7 @@ export async function fetchBanks({ name, state, activeOnly, maxResults }) {
     url.searchParams.set('limit', String(maxResults));
     url.searchParams.set('format', 'json');
 
-    const res = await fetch(url, { headers: { Connection: 'close' } });
-    if (!res.ok) {
-        throw new Error(`FDIC API request failed: ${res.status} ${res.statusText}`);
-    }
+    const res = await fetchWithRetry(url);
     const body = await res.json();
     const rows = body.data ?? [];
 
