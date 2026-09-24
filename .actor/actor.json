@@ -1,7 +1,7 @@
 {
     "actorSpecification": 1,
     "name": "bank-financial-lookup",
-    "title": "Bank Financial Lookup — FDIC Institution Data",
+    "title": "Bank Financials Lookup: FDIC Assets & Deposits",
     "description": "Look up FDIC-insured banks by name or state and get total assets, deposits, equity, charter type, and status. Official FDIC BankFind data, for lending, fintech due diligence, and competitive banking research.",
     "version": "0.1",
     "meta": {
