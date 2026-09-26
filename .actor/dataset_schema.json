@@ -1,0 +1,68 @@
+{
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": [
+                    "name",
+                    "city",
+                    "state",
+                    "active",
+                    "totalAssetsThousandsUsd",
+                    "totalDepositsThousandsUsd",
+                    "totalEquityThousandsUsd",
+                    "asOfDate",
+                    "website",
+                    "cert"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "name": {
+                        "label": "Bank",
+                        "format": "text"
+                    },
+                    "city": {
+                        "label": "City",
+                        "format": "text"
+                    },
+                    "state": {
+                        "label": "State",
+                        "format": "text"
+                    },
+                    "active": {
+                        "label": "Active",
+                        "format": "boolean"
+                    },
+                    "totalAssetsThousandsUsd": {
+                        "label": "Total assets ($000)",
+                        "format": "number"
+                    },
+                    "totalDepositsThousandsUsd": {
+                        "label": "Total deposits ($000)",
+                        "format": "number"
+                    },
+                    "totalEquityThousandsUsd": {
+                        "label": "Total equity ($000)",
+                        "format": "number"
+                    },
+                    "asOfDate": {
+                        "label": "As of",
+                        "format": "text"
+                    },
+                    "website": {
+                        "label": "Website",
+                        "format": "text"
+                    },
+                    "cert": {
+                        "label": "FDIC cert",
+                        "format": "number"
+                    }
+                }
+            }
+        }
+    }
+}
