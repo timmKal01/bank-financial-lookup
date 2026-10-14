@@ -73,4 +73,4 @@ search returns 0 banks or 100.
 
 ## Related products
 
-- [Consumer Complaint Tracker](https://github.com/timmKal01/consumer-complaint-tracker) — new CFPB complaints against these same institutions
+- [CFPB Complaint Tracker](https://apify.com/m_ctim/consumer-complaint-tracker): new CFPB complaints against these same institutions
